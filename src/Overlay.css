@@ -1,69 +1,70 @@
-/* Conteneur overlay 1080x1920 */
+@font-face {
+  font-family: 'Oliver';
+  src: url('/font/Oliver-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Conteneur overlay 1080x1920, fond transparent */
 .overlay {
   position: relative;
   width: 1080px;
   height: 1920px;
-  background-color: #fff;
-  border-radius: 1.5rem;
-  overflow: hidden;
+  background-color: transparent;
+  overflow: visible;
   box-sizing: border-box;
 }
 
-/* Cadrillage de points alignés, défilement de haut en bas, dégradé top→bottom */
-.overlay__bg-dots {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  background-color: transparent;
-  background-image: radial-gradient(
-    circle,
-    rgba(250, 17, 103, 0.5) 6px,
-    transparent 6px
-  );
-  background-size: 64px 64px;
-  background-position: 0 0;
-  background-repeat: repeat;
-  animation: overlay-dots-scroll 8s linear infinite;
-  /* Dégradé : légèrement visibles en haut, de plus en plus visibles vers le bas */
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.2) 20%,
-    rgba(0, 0, 0, 0.5) 100%,
-    black 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.2) 20%,
-    rgba(0, 0, 0, 0.5) 100%,
-    black 100%
-  );
-  mask-size: 100% 100%;
-  -webkit-mask-size: 100% 100%;
-}
-
-@keyframes overlay-dots-scroll {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 64px;
-  }
-}
-
-/* Cadres verts : shadow #fa1167 + rgba(themeColor, 0.3) */
+/* Cadres verts : fond vert, stroke blanc, mini shadow bowl à l’intérieur */
 .overlay__frame {
   position: absolute;
   left: 10px;
   right: 10px;
   background-color: #00ff00;
   box-sizing: border-box;
-  border: 10px solid #ffffff;
-  box-shadow: 0 0px 20px rgba(250, 17, 103, 0.65);
+  border: 10px solid #fff;
+  box-shadow:
+    0 0px 20px rgba(250, 17, 103, 0.65),
+    inset 0 2px 8px rgba(0, 0, 0, 0.03),
+    inset 0 -1px 3px rgba(255, 255, 255, 0.08);
   z-index: 1;
+}
+
+/* Cadre pseudo : x2 taille, fond blanc, shadow inner, fond défilant (n’affecte pas l’espace entre les cadres) */
+.overlay__pseudo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  min-width: 280px;
+  padding: 0 4rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #fff;
+  border: 10px solid #fff;
+  box-shadow: inset 0 0 32px rgba(250, 17, 103, 0.4);
+  box-sizing: border-box;
+  color: rgb(250, 17, 103);
+  font-family: 'Oliver', sans-serif;
+  font-size: 3.5rem;
+  font-weight: normal;
+  letter-spacing: 0.02em;
+  gap: 0.75rem;
+}
+
+.overlay__pseudo-logo {
+  height: 3rem;
+  width: auto;
+  flex-shrink: 0;
+  filter: invert(24%) sepia(89%) saturate(5000%) hue-rotate(330deg) brightness(98%) contrast(101%);
+}
+
+.overlay__pseudo-text {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+  display: inline-block;
 }
