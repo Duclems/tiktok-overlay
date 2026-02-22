@@ -23,6 +23,7 @@ export default function Overlay() {
         className="overlay__marathon"
         style={{ top: HEADER_TOP, height: HEADER_HEIGHT }}
       >
+        <div className="overlay__marathon-dots" aria-hidden />
         <span className="overlay__marathon-text"><strong>Marathon zelda 100%</strong></span>
         <div className="overlay__marathon-bar">
           <div
@@ -41,6 +42,7 @@ export default function Overlay() {
         className="overlay__pseudo"
         style={{ top: PSEUDO_TOP_CENTERED, height: PSEUDO_HEIGHT }}
       >
+        <div className="overlay__pseudo-dots" aria-hidden />
         <img
           src={`${import.meta.env.BASE_URL}img/logo-twitch.svg`}
           alt=""

@@ -62,7 +62,48 @@
   box-sizing: border-box;
 }
 
+/* Petits points en fond, défilement haut → bas, dégradé d’opacité */
+.overlay__marathon-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(var(--theme-rgb), 0.35) 4px,
+    transparent 4px
+  );
+  background-size: 60px 60px;
+  background-position: 0 0;
+  background-repeat: repeat;
+  animation: marathon-dots-scroll 6s linear infinite;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 35%,
+    black 70%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 35%,
+    black 70%
+  );
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+
+@keyframes marathon-dots-scroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 40px;
+  }
+}
+
 .overlay__marathon-text {
+  position: relative;
+  z-index: 1;
   font-family: 'Figtree', sans-serif;
   font-size: 2rem;
   font-weight: 600;
@@ -72,11 +113,14 @@
 }
 
 .overlay__marathon-bar {
+  position: relative;
+  z-index: 1;
   align-self: stretch;
   height: 10px;
   border-radius: 6px;
   background: rgba(var(--theme-rgb), 0.2);
   overflow: hidden;
+  box-shadow: 0 2px 12px rgba(250, 17, 103, 0.2), 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 .overlay__marathon-fill {
@@ -86,7 +130,7 @@
   transition: width 0.3s ease;
 }
 
-/* Cadre pseudo : x2 taille, fond blanc, shadow inner */
+/* Cadre pseudo : fond à points comme le marathon, shadow inner */
 .overlay__pseudo {
   position: absolute;
   left: 50%;
@@ -114,7 +158,39 @@
   gap: 0.75rem;
 }
 
+/* Points en fond du pseudo (même style que marathon : défilement + dégradé) */
+.overlay__pseudo-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(250, 17, 103, 0.35) 4px,
+    transparent 4px
+  );
+  background-size: 60px 60px;
+  background-position: 0 0;
+  background-repeat: repeat;
+  animation: marathon-dots-scroll 6s linear infinite;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 35%,
+    black 70%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 35%,
+    black 70%
+  );
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+
 .overlay__pseudo-logo {
+  position: relative;
+  z-index: 1;
   height: 3rem;
   width: auto;
   flex-shrink: 0;
