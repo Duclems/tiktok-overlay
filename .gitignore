@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 
+# .github/workflows/ est versionné (pas ignoré)
+
 # Build
 dist/
 build/
