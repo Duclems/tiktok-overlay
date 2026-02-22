@@ -5,8 +5,13 @@
   font-style: normal;
 }
 
-/* Conteneur overlay 1080x1920, fond transparent */
+/* inner corner + border = outer corner (border-radius) */
 .overlay {
+  --border-width: 8px;
+  --inner-corner: 32px;
+  --outer-corner: calc(var(--inner-corner) + var(--border-width));
+  --inner-corner-card: 56px;
+  --outer-corner-card: calc(var(--inner-corner-card) + var(--border-width));
   position: relative;
   width: 1080px;
   height: 1920px;
@@ -15,14 +20,15 @@
   box-sizing: border-box;
 }
 
-/* Cadres verts : fond vert, stroke blanc, mini shadow bowl à l’intérieur */
+/* Cadres verts : fond vert, stroke blanc, 10px d’espace sur les côtés */
 .overlay__frame {
   position: absolute;
   left: 10px;
   right: 10px;
   background-color: #00ff00;
   box-sizing: border-box;
-  border: 10px solid #fff;
+  border: var(--border-width) solid #fff;
+  border-radius: var(--outer-corner);
   box-shadow:
     0 0px 20px rgba(250, 17, 103, 0.65),
     inset 0 2px 8px rgba(0, 0, 0, 0.03),
@@ -30,7 +36,55 @@
   z-index: 1;
 }
 
-/* Cadre pseudo : x2 taille, fond blanc, shadow inner, fond défilant (n’affecte pas l’espace entre les cadres) */
+/* Cadre marathon en haut (style pseudo, Figtree, barre de progression) */
+.overlay__marathon {
+  --theme-rgb: 250, 17, 103; /* #fa1167 */
+  --theme-dark: rgb(75, 5, 31); /* thème assombri 30% */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  min-width: 480px;
+  padding: 1.5rem 2.5rem 1.25rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  background-color: #fff;
+  border: var(--border-width) solid #fff;
+  border-radius: var(--outer-corner-card);
+  box-shadow: inset 0 0 32px rgba(var(--theme-rgb), 0.4);
+  box-sizing: border-box;
+}
+
+.overlay__marathon-text {
+  font-family: 'Figtree', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--theme-dark);
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.overlay__marathon-bar {
+  align-self: stretch;
+  height: 10px;
+  border-radius: 6px;
+  background: rgba(var(--theme-rgb), 0.2);
+  overflow: hidden;
+}
+
+.overlay__marathon-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: rgb(var(--theme-rgb));
+  transition: width 0.3s ease;
+}
+
+/* Cadre pseudo : x2 taille, fond blanc, shadow inner */
 .overlay__pseudo {
   position: absolute;
   left: 50%;
@@ -44,7 +98,8 @@
   justify-content: center;
   overflow: hidden;
   background-color: #fff;
-  border: 10px solid #fff;
+  border: var(--border-width) solid #fff;
+  border-radius: var(--outer-corner-card);
   box-shadow: inset 0 0 32px rgba(250, 17, 103, 0.4);
   box-sizing: border-box;
   color: rgb(250, 17, 103);
