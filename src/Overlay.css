@@ -7,7 +7,7 @@
 
 /* inner corner + border = outer corner (border-radius) */
 .overlay {
-  --border-width: 16px;
+  --border-width: 8px;
   --inner-corner: 32px;
   --outer-corner: calc(var(--inner-corner) + var(--border-width));
   --inner-corner-card: 56px;

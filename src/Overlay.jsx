@@ -7,7 +7,7 @@ const GAP_BETWEEN_FRAMES = 40
 const FRAME_HEIGHT = 600
 const FRAME1_TOP = HEADER_TOP + HEADER_HEIGHT + GAP_BETWEEN_FRAMES
 const FRAME2_TOP = FRAME1_TOP + FRAME_HEIGHT + GAP_BETWEEN_FRAMES
-const BORDER_WIDTH = 16
+const BORDER_WIDTH = 8
 const INNER_CORNER = 32
 const BORDER_RADIUS = INNER_CORNER + BORDER_WIDTH
 const PSEUDO_HEIGHT = 112
@@ -42,7 +42,7 @@ export default function Overlay() {
         style={{ top: PSEUDO_TOP_CENTERED, height: PSEUDO_HEIGHT }}
       >
         <img
-          src="/img/logo-twitch.svg"
+          src={`${import.meta.env.BASE_URL}img/logo-twitch.svg`}
           alt=""
           className="overlay__pseudo-logo"
           aria-hidden
