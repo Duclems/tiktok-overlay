@@ -25,7 +25,7 @@
   position: absolute;
   left: 10px;
   right: 10px;
-  background-color: #00ff00;
+  background-color: transparent;
   box-sizing: border-box;
   border: var(--border-width) solid #fff;
   border-radius: var(--outer-corner);
