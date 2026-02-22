@@ -1,0 +1,8 @@
+/* Wrapper overlay 1080x1920, centré sans zoom */
+.app {
+  position: relative;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
