@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Overlay.css'
 
 const HEADER_TOP = 48
@@ -14,21 +14,58 @@ const PSEUDO_HEIGHT = 112
 const PSEUDO_TOP = FRAME1_TOP + FRAME_HEIGHT
 const PSEUDO_TOP_CENTERED = PSEUDO_TOP + GAP_BETWEEN_FRAMES / 2 - PSEUDO_HEIGHT / 2
 const MARATHON_PROGRESS = 70
+const SWITCH_INTERVAL_MS = 30 * 1000
+
+/** Heure en France (Europe/Paris), progression 18h30 → 21h30 en % (0–100) */
+function getStreamProgressPercent() {
+  const now = new Date()
+  const parisNow = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' }))
+  const minutes = parisNow.getHours() * 60 + parisNow.getMinutes() + parisNow.getSeconds() / 60
+  const start = 18 * 60 + 30
+  const end = 21 * 60 + 30
+  if (minutes < start) return 0
+  if (minutes >= end) return 100
+  return Math.round(((minutes - start) / (end - start)) * 100)
+}
 
 export default function Overlay() {
+  const [marathonView, setMarathonView] = useState(true)
+  const [streamProgress, setStreamProgress] = useState(() => getStreamProgressPercent())
+
+  useEffect(() => {
+    const switchView = setInterval(() => setMarathonView((v) => !v), SWITCH_INTERVAL_MS)
+    return () => clearInterval(switchView)
+  }, [])
+
+  useEffect(() => {
+    if (marathonView) return
+    const updateProgress = () => setStreamProgress(getStreamProgressPercent())
+    updateProgress()
+    const t = setInterval(updateProgress, 60 * 1000)
+    return () => clearInterval(t)
+  }, [marathonView])
+
+  const progressPercent = marathonView ? MARATHON_PROGRESS : streamProgress
+
   return (
     <div className="overlay">
-      {/* Cadre marathon en haut (style pseudo) */}
+      {/* Cadre marathon / stream : alterne toutes les 30 s */}
       <div
         className="overlay__marathon"
         style={{ top: HEADER_TOP, height: HEADER_HEIGHT }}
       >
         <div className="overlay__marathon-dots" aria-hidden />
-        <span className="overlay__marathon-text"><strong>Marathon zelda 100%</strong></span>
+        <span className="overlay__marathon-text">
+          {marathonView ? (
+            <strong>Marathon zelda 100%</strong>
+          ) : (
+            <strong>Stream 18h30 - 21h30</strong>
+          )}
+        </span>
         <div className="overlay__marathon-bar">
           <div
             className="overlay__marathon-fill"
-            style={{ width: `${MARATHON_PROGRESS}%` }}
+            style={{ width: `${progressPercent}%` }}
           />
         </div>
       </div>

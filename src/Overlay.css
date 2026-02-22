@@ -195,6 +195,16 @@
   width: auto;
   flex-shrink: 0;
   filter: invert(24%) sepia(89%) saturate(5000%) hue-rotate(330deg) brightness(98%) contrast(101%);
+  animation: logo-rotate-lr 8s ease-in-out infinite;
+}
+
+@keyframes logo-rotate-lr {
+  0%, 100% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
 }
 
 .overlay__pseudo-text {
