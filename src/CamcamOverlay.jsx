@@ -10,6 +10,8 @@ const FRAME_HEIGHT = 600
 const PSEUDO_TOP_CAMCAM = HEADER_TOP + HEADER_HEIGHT + GAP_AFTER_MARATHON
 const FRAME1_TOP = PSEUDO_TOP_CAMCAM + PSEUDO_HEIGHT + GAP_PSEUDO_FRAME
 const MARATHON_PROGRESS = (16 / 18) * 100
+const TOTK_PROGRESS = 0
+const HEADER_SLIDE_COUNT = 3
 const SWITCH_INTERVAL_MS = 30 * 1000
 
 function getStreamProgressPercent() {
@@ -24,37 +26,43 @@ function getStreamProgressPercent() {
 }
 
 export default function CamcamOverlay() {
-  const [marathonView, setMarathonView] = useState(true)
+  const [headerSlide, setHeaderSlide] = useState(0)
   const [streamProgress, setStreamProgress] = useState(() => getStreamProgressPercent())
 
   useEffect(() => {
-    const switchView = setInterval(() => setMarathonView((v) => !v), SWITCH_INTERVAL_MS)
+    const switchView = setInterval(
+      () => setHeaderSlide((i) => (i + 1) % HEADER_SLIDE_COUNT),
+      SWITCH_INTERVAL_MS
+    )
     return () => clearInterval(switchView)
   }, [])
 
   useEffect(() => {
-    if (marathonView) return
+    if (headerSlide !== 1) return
     const updateProgress = () => setStreamProgress(getStreamProgressPercent())
     updateProgress()
     const t = setInterval(updateProgress, 60 * 1000)
     return () => clearInterval(t)
-  }, [marathonView])
+  }, [headerSlide])
 
-  const progressPercent = marathonView ? MARATHON_PROGRESS : streamProgress
+  const progressPercent =
+    headerSlide === 0 ? MARATHON_PROGRESS : headerSlide === 1 ? streamProgress : TOTK_PROGRESS
 
   return (
     <div className="overlay">
-      {/* Cadre marathon / stream (défile des heures) */}
+      {/* Cadre marathon / stream / TotK (défilement) */}
       <div
         className="overlay__marathon"
         style={{ top: HEADER_TOP, height: HEADER_HEIGHT }}
       >
         <div className="overlay__marathon-dots" aria-hidden />
         <span className="overlay__marathon-text">
-          {marathonView ? (
+          {headerSlide === 0 ? (
             <strong>Marathon zelda 100%</strong>
-          ) : (
+          ) : headerSlide === 1 ? (
             <strong>Stream 17h30 - 21h30</strong>
+          ) : (
+            <strong>Zelda Tears of the Kingdom#</strong>
           )}
         </span>
         <div className="overlay__marathon-bar">
