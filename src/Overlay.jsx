@@ -13,15 +13,15 @@ const BORDER_RADIUS = INNER_CORNER + BORDER_WIDTH
 const PSEUDO_HEIGHT = 112
 const PSEUDO_TOP = FRAME1_TOP + FRAME_HEIGHT
 const PSEUDO_TOP_CENTERED = PSEUDO_TOP + GAP_BETWEEN_FRAMES / 2 - PSEUDO_HEIGHT / 2
-const MARATHON_PROGRESS = 75 // 15/20 jeux
+const MARATHON_PROGRESS = (16 / 18) * 100
 const SWITCH_INTERVAL_MS = 30 * 1000
 
-/** Heure en France (Europe/Paris), progression 18h30 → 21h30 en % (0–100) */
+/** Heure en France (Europe/Paris), progression 17h30 → 21h30 en % (0–100) */
 function getStreamProgressPercent() {
   const now = new Date()
   const parisNow = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' }))
   const minutes = parisNow.getHours() * 60 + parisNow.getMinutes() + parisNow.getSeconds() / 60
-  const start = 18 * 60 + 30
+  const start = 17 * 60 + 30
   const end = 21 * 60 + 30
   if (minutes < start) return 0
   if (minutes >= end) return 100
@@ -59,7 +59,7 @@ export default function Overlay() {
           {marathonView ? (
             <strong>Marathon zelda 100%</strong>
           ) : (
-            <strong>Stream 18h30 - 21h30</strong>
+            <strong>Stream 17h30 - 21h30</strong>
           )}
         </span>
         <div className="overlay__marathon-bar">

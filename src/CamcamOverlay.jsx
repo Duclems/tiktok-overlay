@@ -9,14 +9,14 @@ const GAP_PSEUDO_FRAME = -50
 const FRAME_HEIGHT = 600
 const PSEUDO_TOP_CAMCAM = HEADER_TOP + HEADER_HEIGHT + GAP_AFTER_MARATHON
 const FRAME1_TOP = PSEUDO_TOP_CAMCAM + PSEUDO_HEIGHT + GAP_PSEUDO_FRAME
-const MARATHON_PROGRESS = 75 // 15/20 jeux
+const MARATHON_PROGRESS = (16 / 18) * 100
 const SWITCH_INTERVAL_MS = 30 * 1000
 
 function getStreamProgressPercent() {
   const now = new Date()
   const parisNow = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' }))
   const minutes = parisNow.getHours() * 60 + parisNow.getMinutes() + parisNow.getSeconds() / 60
-  const start = 18 * 60 + 30
+  const start = 17 * 60 + 30
   const end = 21 * 60 + 30
   if (minutes < start) return 0
   if (minutes >= end) return 100
@@ -54,7 +54,7 @@ export default function CamcamOverlay() {
           {marathonView ? (
             <strong>Marathon zelda 100%</strong>
           ) : (
-            <strong>Stream 18h30 - 21h30</strong>
+            <strong>Stream 17h30 - 21h30</strong>
           )}
         </span>
         <div className="overlay__marathon-bar">
